@@ -18,13 +18,20 @@ export const Pending = memo(() => {
   // let results = [];
   const fetchData = async () => {
     try {
-      const response1 = await axios.post(apiUrl, {startUrls: [{url: arrays[0].website}]});
-      const response2 = await axios.post(apiUrl, {startUrls: [{url: arrays[1].website}]});
-      const response3 = await axios.post(apiUrl, {startUrls: [{url: arrays[2].website}]});
-      console.log("res1", response1.data, "res2", response2.data, "res3", response3.data);
-      results.push({title: arrays[0].title, company: arrays[0].company, brand: arrays[0].brand, brandLists: response1.data});
-      results.push({title: arrays[1].title, company: arrays[1].company, brand: arrays[1].brand, brandLists: response2.data});
-      results.push({title: arrays[2].title, company: arrays[2].company, brand: arrays[2].brand, brandLists: response3.data});
+      let response1, response2, response3;
+      if(arrays[0].website)
+        response1 = await axios.post(apiUrl, {startUrls: [{url: arrays[0].website}]});
+      if(arrays[1].website)
+        response2 = await axios.post(apiUrl, {startUrls: [{url: arrays[1].website}]});
+      if(arrays[2].website)
+        response3 = await axios.post(apiUrl, {startUrls: [{url: arrays[2].website}]});
+      console.log("res1", response1.data);
+      if(response1)
+        results.push({title: arrays[0].title, company: arrays[0].company, brand: arrays[0].brand, brandLists: response1.data});
+      if(response2)
+        results.push({title: arrays[1].title, company: arrays[1].company, brand: arrays[1].brand, brandLists: response2.data});
+      if(response3)
+        results.push({title: arrays[2].title, company: arrays[2].company, brand: arrays[2].brand, brandLists: response3.data});
     } catch(err) {
       console.log(err)
     }
@@ -42,7 +49,7 @@ export const Pending = memo(() => {
     navigate('/result', {state:results});
   }
   return (
-    <div className='w-full flex flex-col h-screen bg-slate-50'>
+    <div className='w-full flex flex-col h-[calc(100vh-64px)] bg-slate-50'>
       <div className='text-2xl m-5'>Set-up Companies: Confirmation</div>
       <div className='flex flex-col h-[calc(100vh-300px)]'>
         <div className='m-auto'>

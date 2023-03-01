@@ -47,11 +47,11 @@ export const Input = memo(() => {
   };
 
   const handleClick = () => {
-    navigate('pending', {state:arrays});
+    navigate('/pending', {state:arrays});
   }
 
   return (
-    <div className='w-full flex flex-col h-screen bg-slate-50'>
+    <div className='w-full flex flex-col h-[calc(100vh-64px)] bg-slate-50'>
       <div className='text-2xl m-5'>Set-up Companies</div>
       <div className='flex flex-col h-[calc(100vh-300px)]'>
         <div className='m-auto'>
