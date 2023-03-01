@@ -15,23 +15,22 @@ export const Pending = memo(() => {
 
   const [isLoaded, setIsLoaded] = useState(false);
   const [results, setResults] = useState([]);
-  // let results = [];
+  
   const fetchData = async () => {
     try {
-      let response1, response2, response3;
-      if(arrays[0].website)
-        response1 = await axios.post(apiUrl, {startUrls: [{url: arrays[0].website}]});
-      if(arrays[1].website)
-        response2 = await axios.post(apiUrl, {startUrls: [{url: arrays[1].website}]});
-      if(arrays[2].website)
-        response3 = await axios.post(apiUrl, {startUrls: [{url: arrays[2].website}]});
-      console.log("res1", response1.data);
-      if(response1)
-        results.push({title: arrays[0].title, company: arrays[0].company, brand: arrays[0].brand, brandLists: response1.data});
-      if(response2)
-        results.push({title: arrays[1].title, company: arrays[1].company, brand: arrays[1].brand, brandLists: response2.data});
-      if(response3)
-        results.push({title: arrays[2].title, company: arrays[2].company, brand: arrays[2].brand, brandLists: response3.data});
+      const responses = await Promise.all(arrays.map(arr => {
+        if(arr.website)
+          return axios.post(apiUrl, {startUrls: [{url: arr.website}]});
+        else
+          return 0;
+      }
+      ));
+      if(responses[0])
+        results.push({title: arrays[0].title, company: arrays[0].company, brand: arrays[0].brand, brandLists: responses[0].data});
+      if(responses[1])
+        results.push({title: arrays[1].title, company: arrays[1].company, brand: arrays[1].brand, brandLists: responses[1].data});
+      if(responses[2])
+        results.push({title: arrays[2].title, company: arrays[2].company, brand: arrays[2].brand, brandLists: responses[2].data});
     } catch(err) {
       console.log(err)
     }
