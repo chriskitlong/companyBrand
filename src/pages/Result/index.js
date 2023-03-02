@@ -8,7 +8,7 @@ export const Result = memo(() => {
 	const results = location.state;
 
   return (
-		<div className='w-full flex flex-col h-[calc(100vh-64px)] bg-slate-50'>
+		<div className='w-full flex flex-col bg-slate-50'>
 			<div className='text-2xl mt-5 ml-5'>Results</div>
 			<div className='flex flex-col'>
 				<div className='m-auto'>
